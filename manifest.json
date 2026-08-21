@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Magic Bot Discord Version",
+  "version": "1.0.0",
+  "description": "Universal macro recorder & player. Records your keys, clicks and scrolls on ANY website (Discord, YouTube, web apps...) and replays them on loop using trusted browser input. You control start/stop from the popup or hotkeys.",
+  "minimum_chrome_version": "102",
+  "permissions": ["storage", "tabs", "scripting", "debugger", "activeTab", "commands"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-recording": {
+      "suggested_key": { "default": "Alt+R" },
+      "description": "Start / stop recording a macro on the active tab"
+    },
+    "toggle-playback": {
+      "suggested_key": { "default": "Alt+P" },
+      "description": "Start / stop loop playback on the active tab"
+    },
+    "stop-all": {
+      "suggested_key": { "default": "Alt+S" },
+      "description": "Stop both recording and playback"
+    }
+  },
+  "action": {
+    "default_title": "Magic Bot Discord Version",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/engine.js", "content/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}

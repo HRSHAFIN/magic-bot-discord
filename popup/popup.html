@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Magic Bot Discord Version</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Magic Bot Discord Version</h1>
+      <div id="statusLine" class="statusline">idle</div>
+    </div>
+    <span id="statusDot" class="dot"></span>
+  </header>
+
+  <section class="target">
+    <div class="capturehead">
+      <h2>Target tab</h2>
+    </div>
+    <div class="tabrow">
+      <select id="tabSelect"></select>
+      <button id="tabRefresh" class="small" title="Refresh tab list">&#x21BB;</button>
+    </div>
+    <div id="tabInfo" class="capinfo">Pick the tab where you want to record / play (Discord, YouTube, etc.)</div>
+  </section>
+
+  <section class="controls">
+    <button id="recordBtn" class="danger">Start recording</button>
+    <button id="stopRecBtn" class="danger" disabled>Stop &amp; save</button>
+    <button id="playBtn" class="primary">Loop play</button>
+    <button id="stopBtn" class="danger" disabled>Stop</button>
+    <button id="testBtn">Test input</button>
+    <button id="clearBtn">Clear macro</button>
+  </section>
+
+  <p class="hint">Hotkeys: <code>Alt+R</code> record &middot; <code>Alt+P</code> play &middot; <code>Alt+S</code> stop (work on the active tab)</p>
+
+  <details class="settings" open>
+    <summary>Playback settings</summary>
+    <label class="inline">
+      <input id="trustedInput" type="checkbox" /> Trusted input (CDP, most reliable)
+    </label>
+    <label>Mouse coordinates
+      <select id="coordsMode">
+        <option value="normalized">Normalized (fits any window size)</option>
+        <option value="absolute">Absolute (exact pixels)</option>
+      </select>
+    </label>
+    <label>Loop count (0 = forever)
+      <input id="loopCount" type="number" min="0" step="1" />
+    </label>
+    <label>Pause between loops min (ms)
+      <input id="repeatMin" type="number" min="0" step="100" />
+    </label>
+    <label>Pause between loops max (ms)
+      <input id="repeatMax" type="number" min="100" step="100" />
+    </label>
+    <label>Playback speed (0.3x - 3x)
+      <input id="speed" type="number" min="0.3" max="3" step="0.1" />
+    </label>
+    <div class="btnrow">
+      <button id="saveBtn">Save settings</button>
+    </div>
+  </details>
+
+  <section class="macro">
+    <div class="capturehead">
+      <h2>Macros</h2>
+    </div>
+    <div class="macrosel">
+      <select id="macroSelect"></select>
+      <button id="macroNew" class="small">New</button>
+      <button id="macroRename" class="small">Rename</button>
+      <button id="macroDelete" class="small danger">Delete</button>
+    </div>
+    <div id="macroInfo" class="capinfo"></div>
+
+    <details class="macedit">
+      <summary>Edit macro manually</summary>
+      <p class="hint">One action per line:<br />
+      <code>delay_ms&nbsp;&nbsp;key</code> &middot; <code>delay_ms&nbsp;&nbsp;click nx ny</code> &middot; <code>delay_ms&nbsp;&nbsp;scroll dx dy</code><br />
+      Example:<br />
+      <code>0&nbsp;&nbsp;click 0.5 0.5<br />300&nbsp;&nbsp;Space<br />200&nbsp;&nbsp;scroll 0 400</code></p>
+      <textarea id="macroText" rows="8" spellcheck="false"></textarea>
+      <div class="btnrow">
+        <button id="macroSaveEdit">Save edited macro</button>
+      </div>
+      <div id="macroEditInfo" class="capinfo"></div>
+    </details>
+
+    <div class="btnrow">
+      <button id="exportBtn" class="small">Export macros (.json)</button>
+      <button id="importBtn" class="small">Import macros</button>
+      <input id="importFile" type="file" accept=".json,application/json" style="display:none;" />
+    </div>
+  </section>
+
+  <section class="logbox">
+    <div class="loghead">
+      <h2>Log</h2>
+      <button id="clearLogBtn" class="small">Clear</button>
+    </div>
+    <div id="log"></div>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
